@@ -3,29 +3,77 @@ if (window.location.hostname == 'localhost') {
   hst = './scratch/'
 };
 
-var selCont = '<select>'
-winOrder.forEach(function(e) {
-  selCont += '<option value="' + e + '">' + partyNames[e]['NAZEV_STRK'] + '</option>'
+var cands = {
+  'HLASY_01': 'M. Topolánek',
+  'HLASY_02': 'M. Horáček',
+  'HLASY_03': 'P. Fischer',
+  'HLASY_04': 'J. Hynek',
+  'HLASY_05': 'P. Hannig',
+  'HLASY_06': 'V. Kulhánek',
+  'HLASY_07': 'M. Zeman',
+  'HLASY_08': 'M. Hilšer',
+  'HLASY_09': 'J. Drahoš'
+};
+
+var candsCols = {
+  'HLASY_01': 'rgba(55,126,184, 0.7)',
+  'HLASY_02': 'rgba(247,129,191, 0.7)',
+  'HLASY_03': 'rgba(255,127,0, 0.7)',
+  'HLASY_04': 'rgba(254,240,217, 0.7)',
+  'HLASY_05': 'rgba(166,86,40, 0.7)',
+  'HLASY_06': 'rgba(255,255,51, 0.7)',
+  'HLASY_07': 'rgba(228,26,28, 0.7)',
+  'HLASY_08': 'rgba(77,175,74, 0.7)',
+  'HLASY_09': 'rgba(152,78,163, 0.7)'
+};
+
+var selCont = '<select><option value="HL_OKRS">Vítězové v okrscích</option>' 
+            + '<option value="UCAST">Účast</option>'
+Object.keys(cands).forEach(function(e) {
+  selCont += '<option value="' + e + '">' + cands[e] + '</option>'
 });
 selCont += '</select>'
 $('#select').html(selCont)
 
-function getColor(party, y13, y17) {
-  var val = y17 - y13
+function orderWinners(props) {
+  var out = {};
+  Object.keys(props).forEach(function(key) {
+    if (cands.hasOwnProperty(key)) {
+      out[key] = props[key];
+    };
+  });
+  return Object.keys(out).sort(function(a, b) {
+    return out[b] - out[a]
+  });
+};
 
+function getColor(props, party) {
   var col;
-  if (val <= breaks[party][0]) { col = 'rgba(215,48,39, 0.7)' } else
-  if (val <= breaks[party][1]) { col = 'rgba(252,141,89, 0.7)' } else
-  if (val <= breaks[party][2]) { col = 'rgba(254,224,144, 0.7)' } else // nula
-  if (val <= breaks[party][3]) { col = 'rgba(224,243,248, 0.7)' } else
-  if (val <= breaks[party][4]) { col = 'rgba(145,191,219), 0.7' } else
-  if (val > breaks[party][4]) { col = 'rgba(69,117,180, 0.7)' } else
-    {col = "white"}
-
+  if (party == 'HL_OKRS') {
+    var win = orderWinners(props);
+    col = candsCols[win[0]] || 'rgba(242,240,247, 1';
+  } else if (party == 'UCAST') {
+    var val = props['PL_HL_CELK'] / props['VOL_SEZNAM']
+    if (val <= breaks[party][0]) { col = 'rgba(242,240,247, 0.7)' } else
+    if (val <= breaks[party][1]) { col = 'rgba(203,201,226, 0.7)' } else
+    if (val <= breaks[party][2]) { col = 'rgba(158,154,200, 0.7)' } else
+    if (val <= breaks[party][3]) { col = 'rgba(106,81,163, 0.7)' } else
+    if (val > breaks[party][3]) { col = 'rgba(215,48,31, 0.7)' } else
+      {col = 'rgba(242,240,247, 1'}
+  } else {
+    var val = props[party] / props['PL_HL_CELK']
+    if (val <= breaks[party][0]) { col = 'rgba(254,240,217, 0.7)' } else
+    if (val <= breaks[party][1]) { col = 'rgba(253,204,138, 0.7)' } else
+    if (val <= breaks[party][2]) { col = 'rgba(252,141,89, 0.7)' } else
+    if (val <= breaks[party][3]) { col = 'rgba(215,48,31, 0.7)' } else
+    if (val > breaks[party][3]) { col = 'rgba(215,48,31, 0.7)' } else
+      {col = 'rgba(242,240,247, 1'}
+  }  
+ 
   var style = new ol.style.Style({
     stroke: new ol.style.Stroke({
       color: "lightgray",
-      width: 0.7
+      width: 0.3
     }),
     fill: new ol.style.Fill({
       color: col
@@ -35,24 +83,19 @@ function getColor(party, y13, y17) {
 };
 
 function makeTooltip(party, evt) {
-  for (var key in evt) {
-    if (key.startsWith('r_')) {
-      data[parseInt(key.replace('r_', ''))] = evt[key]
-    }
-  }
-
-  var rozdil = evt['R17_' + party] - evt['R13_' + party];
-
-  var blabol = '<b>' + (evt['NAZ_ZKR_MOaMC'] || evt['NAZ_OBEC']) + '</b>, okres ' + evt['NAZ_LAU1'] + '<br>'
-  if (isNaN(rozdil)){
-    return;
-  }
-  else if (rozdil >= 0) {
-    blabol += 'Strana ' + partyNames[party]['ZKRATKAK8'] + ' zde <span style="color: #4575b4;">získala ' + (Math.round(rozdil * 100) / 100) + ' p. b.</span> (PSP 2013: ' + evt['R13_' + party] + ' %, PSP 2017: ' + evt['R17_' + party] + ' %)'
+  var blabol = '<b>Okrsek č. ' + evt['Cislo'] + ', ' + (evt['mc'] || evt['obec']) + '</b>, okres ' + evt['okres'] + '<br>'
+  if (typeof evt['PL_HL_CELK'] == 'undefined') {
+    blabol += 'Ve vojenských újezdech volby neprobíhají.'
+  } else if (party == 'UCAST') {
+    blabol += 'Účast ze byla ' + Math.round((evt['PL_HL_CELK'] / evt['VOL_SEZNAM']) * 1000 ) / 10 + ' %.'
+  } else if (party == 'HL_OKRS') {
+    var win = orderWinners(evt);
+    var dist = evt[win[0]] - evt[win[1]];
+    blabol += 'Zvítězil zde ' + cands[win[0]] + ' s náskokem ' + dist + ' hlasů na ' + cands[win[1]] + '.'
   } else {
-    blabol += 'Strana ' + partyNames[party]['ZKRATKAK8'] + ' zde <span style="color: #d73027;">ztratila ' + Math.abs((Math.round(rozdil * 100) / 100)) + ' p. b.</span> (PSP 2013: ' + evt['R13_' + party] + ' %, PSP 2017: ' + evt['R17_' + party] + ' %)'
-  };
-
+    blabol += cands[party] + ' zde získal ' + Math.round((evt[party] / evt['PL_HL_CELK']) * 1000 ) / 10 + ' % hlasů (z celkem ' 
+    + evt['PL_HL_CELK'] + ').'
+  }
   document.getElementById('tooltip').innerHTML = blabol
 };
 
@@ -81,10 +124,10 @@ function drawMap(party) {
       format: new ol.format.MVT(),
       tileGrid: tilegrid,
       tilePixelRatio: 8,
-      url: hst + 'prez18-k1-tiles/{z}/{x}/{y}.pbf'
+      url: hst + 'prez18-r1-tiles/{z}/{x}/{y}.pbf'
     }),
     style: function(feature) {
-      return getColor(party, feature.get('R13_' + party), feature.get('R17_' + party))
+      return getColor(feature.properties_, party)
     }
   });
 
@@ -119,7 +162,7 @@ function drawMap(party) {
     var pixel = map.getEventPixel(evt.originalEvent);
     if (map.hasFeatureAtPixel(pixel)){
       map.forEachFeatureAtPixel(pixel, function(feature, layer) {
-        makeTooltip(party, feature.c);
+        makeTooltip(party, feature.properties_);
       });
     } else {
       document.getElementById('tooltip').innerHTML = 'Najetím vyberte obec.'
@@ -131,7 +174,7 @@ function drawMap(party) {
     var pixel = map.getEventPixel(evt.originalEvent);
     if (map.hasFeatureAtPixel(pixel)){
       map.forEachFeatureAtPixel(pixel, function(feature, layer) {
-        makeTooltip(party, feature.c);
+        makeTooltip(party, feature.properties_);
       });
     } else {
       document.getElementById('tooltip').innerHTML = 'Kliknutím vyberte obec.'
@@ -162,9 +205,9 @@ form.onsubmit = function(event) {
 };
 };
 
-drawMap(768)
+drawMap('HL_OKRS')
 
 $('#select').on('change', function() {
-  drawMap(parseInt($(this).find(":selected").val()));
+  drawMap($(this).find(":selected").val());
 });
 
