@@ -106,7 +106,7 @@ function makeTooltip(party, evt) {
   document.getElementById('tooltip').innerHTML = blabol
 };
 
-var tilegrid = ol.tilegrid.createXYZ({tileSize: 512, maxZoom: 12});
+var tilegrid = ol.tilegrid.createXYZ({tileSize: 512, maxZoom: 15});
 
 var background = new ol.layer.Tile({
   source: new ol.source.OSM({
@@ -120,7 +120,7 @@ var background = new ol.layer.Tile({
 var labels = new ol.layer.Tile({
   source: new ol.source.OSM({
     url: 'https://interaktivni.rozhlas.cz/tiles/ton_l1/{z}/{x}/{y}.png',
-    maxZoom: 11
+    maxZoom: 15
   })
 })
 
@@ -154,7 +154,7 @@ function drawMap(party) {
       center: ol.proj.transform([15.3350758, 49.7417517], 'EPSG:4326', 'EPSG:3857'), //Číhošť
       zoom: initZoom,
       minZoom: 6,
-      maxZoom: 11
+      maxZoom: 15
     })
   });
 
