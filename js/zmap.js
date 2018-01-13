@@ -162,21 +162,19 @@ function drawMap(party) {
   map.addLayer(layer);
   map.addLayer(labels);
 
-  if (!(isEdge | isFirefox | isIE)) {
-    map.on('pointermove', function(evt) {
-      if (evt.dragging) {
-        return;
-      }
-      var pixel = map.getEventPixel(evt.originalEvent);
-      if (map.hasFeatureAtPixel(pixel)){
-        map.forEachFeatureAtPixel(pixel, function(feature, layer) {
-          makeTooltip(party, feature.properties_);
-        });
-      } else {
-        document.getElementById('tooltip').innerHTML = 'Myší vyberte obec.'
-      }
-    });
-  };
+  map.on('pointermove', function(evt) {
+    if (evt.dragging) {
+      return;
+    }
+    var pixel = map.getEventPixel(evt.originalEvent);
+    if (map.hasFeatureAtPixel(pixel)){
+      map.forEachFeatureAtPixel(pixel, function(feature, layer) {
+        makeTooltip(party, feature.properties_);
+      });
+    } else {
+      document.getElementById('tooltip').innerHTML = 'Myší vyberte obec.'
+    }
+  });
 
   //mobil
   map.on('singleclick', function(evt) {
