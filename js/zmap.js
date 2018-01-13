@@ -26,7 +26,7 @@ var candsCols = {
   'HLASY_04': 'rgba(51,160,44, .7)',
   'HLASY_05': 'rgba(177,89,40, .7)',
   'HLASY_06': 'rgba(255,127,0, .7)',
-  'HLASY_07': 'rgba(106,61,154, .7)',
+  'HLASY_07': 'rgba(227,26,28, .7)',
   'HLASY_08': 'rgba(251,154,153, .7)',
   'HLASY_09': 'rgba(152,78,163, .7)'
 };
@@ -61,8 +61,8 @@ function getColor(props, party) {
     if (val <= breaks[party][0]) { col = 'rgba(242,240,247, 0.7)' } else
     if (val <= breaks[party][1]) { col = 'rgba(203,201,226, 0.7)' } else
     if (val <= breaks[party][2]) { col = 'rgba(158,154,200, 0.7)' } else
-    if (val <= breaks[party][3]) { col = 'rgba(106,81,163, 0.7)' } else
-    if (val > breaks[party][3]) { col = 'rgba(215,48,31, 0.7)' } else
+    if (val <= breaks[party][3]) { col = 'rgba(117,107,177, 0.7)' } else
+    if (val > breaks[party][3]) { col = 'rgba(84,39,143, 0.7)' } else
       {col = 'rgba(242,240,247, 1'}
   } else {
     var val = props[party] / props['PL_HL_CELK']
