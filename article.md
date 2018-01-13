@@ -2,7 +2,7 @@ title: "Koho volili vaši sousedi? Prohlédněte si nejpodrobnější mapu výsl
 perex: "Miloš Zeman zvítězil ve všech krajích s výjimkou Prahy. Detailnější pohled na volební mapu ovšem ukazuje pestřejší obrázek: Jiří Drahoš výrazně bodoval centrech větších měst, ale také v okolí rodného Jablunkova nebo v horských střediscích. A jak to dopadlo u vás?"
 authors: ["Jan Cibulka", "Petr Kočí"]
 published: "13. ledna 2018"
-coverimg: https://dev.datarozhlas.cz/prez18-okrsky/media/mapa.png
+coverimg: https://dev.datarozhlas.cz/prez18-okrsky/media/mapa.jpg
 coverimg_note: "Foto <a href='#'>ČTK</a>"
 styles: ["https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.4/ol.css"]
 libraries: ["https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js", "https://ft-polyfill-service.herokuapp.com/v2/polyfill.min.js?features=Object.values,String.prototype.startsWith", "https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.4/ol-debug.js"]
