@@ -1,5 +1,5 @@
 title: "Koho volili vaši sousedi? Prohlédněte si nejpodrobnější mapu výsledků prvního kola prezidentské volby"
-perex: "Miloš Zeman zvítězil ve všech krajích s výjimkou Prahy. Detailnější pohled na volební mapu ovšem ukazuje pestřejší obrázek: Jiří Drahoš výrazně bodoval centrech větších měst, ale také v okolí rodného Jablunkova nebo v horských střediscích. A jak to dopadlo u vás?"
+perex: "Miloš Zeman zvítězil ve všech krajích s výjimkou Prahy. Detailnější pohled na volební mapu ovšem ukazuje pestřejší obrázek: Jiří Drahoš výrazně bodoval v centrech větších měst, ale také v okolí rodného Jablunkova nebo v horských střediscích. A jak to dopadlo u vás?"
 authors: ["Jan Cibulka", "Petr Kočí"]
 published: "13. ledna 2018"
 coverimg: https://dev.datarozhlas.cz/prez18-okrsky/media/mapa.jpg
