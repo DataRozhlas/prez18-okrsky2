@@ -109,7 +109,7 @@ function makeTooltip(party, evt) {
 var tilegrid = ol.tilegrid.createXYZ({tileSize: 512, maxZoom: 15});
 
 var background = new ol.layer.Tile({
-  source: new ol.source.OSM({
+  source: new ol.source.TileImage({
     url: 'https://interaktivni.rozhlas.cz/tiles/ton_b1/{z}/{x}/{y}.png',
     attributions: [
       new ol.Attribution({ html: 'obrazový podkres <a target="_blank" href="http://stamen.com">Stamen</a>, <a target="_blank" href="https://samizdat.cz">Samizdat</a>, data <a target="_blank" href="https://www.czso.cz/csu/czso/uchazeci-o-zamestnani-dosazitelni-a-podil-nezamestnanych-osob-podle-obci">ČSÚ</a>'})
@@ -118,10 +118,10 @@ var background = new ol.layer.Tile({
 })
 
 var labels = new ol.layer.Tile({
-  source: new ol.source.OSM({
+  source: new ol.source.TileImage({
     url: 'https://interaktivni.rozhlas.cz/tiles/ton_l1/{z}/{x}/{y}.png',
     maxZoom: 15
-  })
+   })
 })
 
 function drawMap(party) {
