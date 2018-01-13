@@ -3,28 +3,32 @@ if (window.location.hostname == 'localhost') {
   hst = './scratch/'
 };
 
+var isFirefox = typeof InstallTrigger !== 'undefined';
+var isIE = /*@cc_on!@*/false || !!document.documentMode;
+var isEdge = !isIE && !!window.StyleMedia;
+
 var cands = {
-  'HLASY_01': 'M. Topolánek',
-  'HLASY_02': 'M. Horáček',
-  'HLASY_03': 'P. Fischer',
-  'HLASY_04': 'J. Hynek',
-  'HLASY_05': 'P. Hannig',
-  'HLASY_06': 'V. Kulhánek',
-  'HLASY_07': 'M. Zeman',
-  'HLASY_08': 'M. Hilšer',
-  'HLASY_09': 'J. Drahoš'
+  'HLASY_01': 'Topolánek',
+  'HLASY_02': 'Horáček',
+  'HLASY_03': 'Fischer',
+  'HLASY_04': 'Hynek',
+  'HLASY_05': 'Hannig',
+  'HLASY_06': 'Kulhánek',
+  'HLASY_07': 'Zeman',
+  'HLASY_08': 'Hilšer',
+  'HLASY_09': 'Drahoš'
 };
 
 var candsCols = {
-  'HLASY_01': 'rgba(55,126,184, 0.7)',
-  'HLASY_02': 'rgba(247,129,191, 0.7)',
-  'HLASY_03': 'rgba(255,127,0, 0.7)',
-  'HLASY_04': 'rgba(254,240,217, 0.7)',
-  'HLASY_05': 'rgba(166,86,40, 0.7)',
-  'HLASY_06': 'rgba(255,255,51, 0.7)',
-  'HLASY_07': 'rgba(228,26,28, 0.7)',
-  'HLASY_08': 'rgba(77,175,74, 0.7)',
-  'HLASY_09': 'rgba(152,78,163, 0.7)'
+  'HLASY_01': 'rgba(31,120,180, .7)',
+  'HLASY_02': 'rgba(166,206,227, .7)',
+  'HLASY_03': 'rgba(178,223,138, .7)',
+  'HLASY_04': 'rgba(51,160,44, .7)',
+  'HLASY_05': 'rgba(177,89,40, .7)',
+  'HLASY_06': 'rgba(255,127,0, .7)',
+  'HLASY_07': 'rgba(106,61,154, .7)',
+  'HLASY_08': 'rgba(251,154,153, .7)',
+  'HLASY_09': 'rgba(152,78,163, .7)'
 };
 
 var selCont = '<select><option value="HL_OKRS">Vítězové v okrscích</option>' 
@@ -87,11 +91,14 @@ function makeTooltip(party, evt) {
   if (typeof evt['PL_HL_CELK'] == 'undefined') {
     blabol += 'Ve vojenských újezdech volby neprobíhají.'
   } else if (party == 'UCAST') {
-    blabol += 'Účast ze byla ' + Math.round((evt['PL_HL_CELK'] / evt['VOL_SEZNAM']) * 1000 ) / 10 + ' %.'
+    blabol += 'Účast zde byla ' + Math.round((evt['PL_HL_CELK'] / evt['VOL_SEZNAM']) * 1000 ) / 10 + ' %.'
   } else if (party == 'HL_OKRS') {
     var win = orderWinners(evt);
-    var dist = evt[win[0]] - evt[win[1]];
-    blabol += 'Zvítězil zde ' + cands[win[0]] + ' s náskokem ' + dist + ' hlasů na ' + cands[win[1]] + '.'
+    for (var key in win) {
+      console.log(win[key])
+      blabol += '<b><span style="color: ' + candsCols[win[key]].replace('.7', '1') + ';">' + cands[win[key]] + '</span></b> (' + evt[win[key]] + ' hl., ' 
+      + Math.round((evt[win[key]] / evt['PL_HL_CELK']) * 1000 ) / 10 + ' %); '
+    }
   } else {
     blabol += cands[party] + ' zde získal ' + Math.round((evt[party] / evt['PL_HL_CELK']) * 1000 ) / 10 + ' % hlasů (z celkem ' 
     + evt['PL_HL_CELK'] + ').'
@@ -155,19 +162,21 @@ function drawMap(party) {
   map.addLayer(layer);
   map.addLayer(labels);
 
-  map.on('pointermove', function(evt) {
-    if (evt.dragging) {
-      return;
-    }
-    var pixel = map.getEventPixel(evt.originalEvent);
-    if (map.hasFeatureAtPixel(pixel)){
-      map.forEachFeatureAtPixel(pixel, function(feature, layer) {
-        makeTooltip(party, feature.properties_);
-      });
-    } else {
-      document.getElementById('tooltip').innerHTML = 'Najetím vyberte obec.'
-    }
-  });
+  if (!(isEdge | isFirefox | isIE)) {
+    map.on('pointermove', function(evt) {
+      if (evt.dragging) {
+        return;
+      }
+      var pixel = map.getEventPixel(evt.originalEvent);
+      if (map.hasFeatureAtPixel(pixel)){
+        map.forEachFeatureAtPixel(pixel, function(feature, layer) {
+          makeTooltip(party, feature.properties_);
+        });
+      } else {
+        document.getElementById('tooltip').innerHTML = 'Myší vyberte obec.'
+      }
+    });
+  };
 
   //mobil
   map.on('singleclick', function(evt) {

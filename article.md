@@ -21,13 +21,8 @@ Během dne se lidé v Praze soustřeďují v okolí administrativních center a 
 <wide>
 <div id="mapdiv">
 	<div id="select"></div>
-	<div id="tooltip">Najetím vyberte obec.</div>
+	<div id="tooltip">Myší vyberte obec.</div>
 	<div id="map" class="map"></div>
-	<div id="legend">
-		<div id="scale"></div>
-		<span class="zisk">zisk</span>
-		<span class="ztrata">ztráta</span>
-	</div>
 	 <form action="?" id='frm-geocode'>
 	  <label for="inp-geocode">Najít adresu</label>
 	  <div class="inputs">
