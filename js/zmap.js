@@ -1,4 +1,4 @@
-var hst = 'https://samizdat.blob.core.windows.net/storage/';
+var hst = 'https://dykpt7ybnnm0u.cloudfront.net/';
 if (window.location.hostname == 'localhost') {
   hst = './scratch/'
 };
@@ -8,26 +8,12 @@ var isIE = /*@cc_on!@*/false || !!document.documentMode;
 var isEdge = !isIE && !!window.StyleMedia;
 
 var cands = {
-  'HLASY_01': 'Topolánek',
-  'HLASY_02': 'Horáček',
-  'HLASY_03': 'Fischer',
-  'HLASY_04': 'Hynek',
-  'HLASY_05': 'Hannig',
-  'HLASY_06': 'Kulhánek',
   'HLASY_07': 'Zeman',
-  'HLASY_08': 'Hilšer',
   'HLASY_09': 'Drahoš'
 };
 
 var candsCols = {
-  'HLASY_01': 'rgba(31,120,180, .7)',
-  'HLASY_02': 'rgba(166,206,227, .7)',
-  'HLASY_03': 'rgba(178,223,138, .7)',
-  'HLASY_04': 'rgba(51,160,44, .7)',
-  'HLASY_05': 'rgba(177,89,40, .7)',
-  'HLASY_06': 'rgba(255,127,0, .7)',
   'HLASY_07': 'rgba(227,26,28, .7)',
-  'HLASY_08': 'rgba(251,154,153, .7)',
   'HLASY_09': 'rgba(152,78,163, .7)'
 };
 
@@ -131,7 +117,7 @@ function drawMap(party) {
       format: new ol.format.MVT(),
       tileGrid: tilegrid,
       tilePixelRatio: 8,
-      url: hst + 'prez18-r1-tiles/{z}/{x}/{y}.pbf'
+      url: hst + 'prez18-r2-tiles/{z}/{x}/{y}.pbf'
     }),
     style: function(feature) {
       return getColor(feature.properties_, party)
