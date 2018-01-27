@@ -1,5 +1,5 @@
 title: "Koho volili vaši sousedi? Prohlédněte si nejpodrobnější mapu výsledků druhého kola prezidentské volby"
-perex: "Miloš Zeman zvítězil ve všech krajích s výjimkou Prahy a Královéhradeckého. Detailnější pohled na volební mapu ovšem ukazuje pestřejší obrázek: Jiří Drahoš bodoval i na Liberecku, Zlínsku či Českobudějovicku. A jak to dopadlo u vás?"
+perex: "Miloš Zeman zvítězil, zdaleka ale neovládl všechny kraje. Detailnější pohled na volební mapu ukazuje pestrý obrázek: Jiří Drahoš bodoval na Liberecku, Zlínsku, Pardubicku či Českobudějovicku. A jak to dopadlo u vás?"
 authors: ["Jan Cibulka", "Petr Kočí"]
 published: "27. ledna 2018"
 coverimg: https://dev.datarozhlas.cz/prez18-okrsky2/media/mapa.jpg
