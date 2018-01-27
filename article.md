@@ -13,7 +13,7 @@ options: "noheader, nopic" #wide, noheader (+nopic)
 <wide>
 <div id="mapdiv">
 	<div id="select"></div>
-	<div id="tooltip">Myší vyberte obec.</div>
+	<div id="tooltip">Myší vyberte obec.<br>&nbsp;</div>
 	<div id="map" class="map"></div>
 	 <form action="?" id='frm-geocode'>
 	  <label for="inp-geocode">Najít adresu</label>

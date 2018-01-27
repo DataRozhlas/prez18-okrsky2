@@ -128,7 +128,7 @@ function drawMap(party) {
 
   if (window.innerWidth < 768) {
     initZoom = 6;
-    document.getElementById('tooltip').innerHTML = 'Kliknutím vyberte obec.'
+    document.getElementById('tooltip').innerHTML = 'Kliknutím vyberte obec.<br>&nbsp;'
   } else {
     initZoom = 7;
   }
@@ -159,7 +159,7 @@ function drawMap(party) {
           makeTooltip(party, feature.properties_);
         });
       } else {
-        document.getElementById('tooltip').innerHTML = 'Myší vyberte obec.'
+        document.getElementById('tooltip').innerHTML = 'Myší vyberte obec.<br>&nbsp;'
       }
     });
   };
