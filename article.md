@@ -24,3 +24,7 @@ options: "noheader, nopic" #wide, noheader (+nopic)
 	</form>
 </div>
 </wide>
+
+A jak vypadá mapa České republiky, když do ní za každý hlas v prezidentských volbách nakreslíme jednu tečku? Červené tečky představují hlasy z druhého kola pro Miloše Zemana, modré pro Jiřího Drahoše. Velké bílé plochy jsou vojenské újezdy, kde se nevolí.
+
+<img src="https://dev.datarozhlas.cz/prez18-okrsky2/media/out.png" style="max-width: 100%">
